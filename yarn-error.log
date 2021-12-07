@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Paullotx\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @babel-preset-typescript
+  C:\Program Files\nodejs\node.exe C:\Users\Paullotx\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add rete-limiter-flexible
 
 PATH: 
   C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\PostgreSQL\12\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools;C:\Users\Paullotx\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin;;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\Paullotx\AppData\Local\Microsoft\WindowsApps;C:\Users\Paullotx\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Paullotx\AppData\Local\Yarn\bin;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools;C:\Program Files\Git\usr\bin;C:\Users\Paullotx\AppData\Roaming\npm
@@ -14,8 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@babel-preset-typescript: Request "https://registry.yarnpkg.com/@babel-preset-typescript" returned a 405
-      at Request.params.callback [as _callback] (C:\Users\Paullotx\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66996:18)
+  Error: https://registry.yarnpkg.com/rete-limiter-flexible: Not found
+      at Request.params.callback [as _callback] (C:\Users\Paullotx\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66987:18)
       at Request.self.callback (C:\Users\Paullotx\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140748:22)
       at Request.emit (events.js:400:28)
       at Request.<anonymous> (C:\Users\Paullotx\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141720:10)
@@ -36,6 +36,7 @@ npm manifest:
       "aws-sdk": "^2.1020.0",
       "bcryptjs": "^2.4.3",
       "class-transformer": "^0.4.0",
+      "cors": "^2.8.5",
       "csv-parse": "^4.16.0",
       "dayjs": "^1.10.6",
       "dotenv": "^10.0.0",
@@ -55,7 +56,7 @@ npm manifest:
       "uuid": "^8.3.2"
     },
     "scripts": {
-      "build": "tsc",
+      "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
       "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn --poll src/shared/infra/http/server.ts",
       "start": "src/shared/infra/http/server.ts",
       "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
@@ -69,7 +70,9 @@ npm manifest:
       "@babel/plugin-proposal-class-properties": "^7.16.0",
       "@babel/plugin-proposal-decorators": "^7.16.4",
       "@babel/preset-env": "^7.16.4",
+      "@babel/preset-typescript": "^7.16.0",
       "@types/bcryptjs": "^2.4.2",
+      "@types/cors": "^2.8.12",
       "@types/express": "^4.17.13",
       "@types/jest": "^26.0.24",
       "@types/jsonwebtoken": "^8.5.4",
@@ -703,6 +706,13 @@ Lockfile:
     dependencies:
       "@babel/helper-plugin-utils" "^7.14.5"
   
+  "@babel/plugin-syntax-typescript@^7.16.0":
+    version "7.16.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.16.0.tgz#2feeb13d9334cc582ea9111d3506f773174179bb"
+    integrity sha512-Xv6mEXqVdaqCBfJFyeab0fH2DnUoMsDmhamxsSi4j8nLd4Vtw213WMJr55xxqipC/YVWyPY3K0blJncPYji+dQ==
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.14.5"
+  
   "@babel/plugin-transform-arrow-functions@^7.16.0":
     version "7.16.0"
     resolved "https://registry.yarnpkg.com/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.16.0.tgz#951706f8b449c834ed07bd474c0924c944b95a8e"
@@ -936,6 +946,15 @@ Lockfile:
     dependencies:
       "@babel/helper-plugin-utils" "^7.14.5"
   
+  "@babel/plugin-transform-typescript@^7.16.0":
+    version "7.16.1"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.16.1.tgz#cc0670b2822b0338355bc1b3d2246a42b8166409"
+    integrity sha512-NO4XoryBng06jjw/qWEU2LhcLJr1tWkhpMam/H4eas/CDKMX/b2/Ylb6EI256Y7+FVPCawwSM1rrJNOpDiz+Lg==
+    dependencies:
+      "@babel/helper-create-class-features-plugin" "^7.16.0"
+      "@babel/helper-plugin-utils" "^7.14.5"
+      "@babel/plugin-syntax-typescript" "^7.16.0"
+  
   "@babel/plugin-transform-unicode-escapes@^7.16.0":
     version "7.16.0"
     resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-escapes/-/plugin-transform-unicode-escapes-7.16.0.tgz#1a354064b4c45663a32334f46fa0cf6100b5b1f3"
@@ -1041,6 +1060,15 @@ Lockfile:
       "@babel/plugin-transform-dotall-regex" "^7.4.4"
       "@babel/types" "^7.4.4"
       esutils "^2.0.2"
+  
+  "@babel/preset-typescript@^7.16.0":
+    version "7.16.0"
+    resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.16.0.tgz#b0b4f105b855fb3d631ec036cdc9d1ffd1fa5eac"
+    integrity sha512-txegdrZYgO9DlPbv+9QOVpMnKbOtezsLHWsnsRF4AjbSIsVaujrq1qg8HK0mxQpWv0jnejt0yEoW1uWpvbrDTg==
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.14.5"
+      "@babel/helper-validator-option" "^7.14.5"
+      "@babel/plugin-transform-typescript" "^7.16.0"
   
   "@babel/register@^7.16.0":
     version "7.16.0"
@@ -1443,6 +1471,11 @@ Lockfile:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/@types/cookiejar/-/cookiejar-2.1.2.tgz#66ad9331f63fe8a3d3d9d8c6e3906dd10f6446e8"
     integrity sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==
+  
+  "@types/cors@^2.8.12":
+    version "2.8.12"
+    resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.12.tgz#6b2c510a7ad7039e98e7b8d3d6598f4359e5c080"
+    integrity sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==
   
   "@types/express-serve-static-core@^4.17.18":
     version "4.17.24"
@@ -2525,6 +2558,14 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
     integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
+  
+  cors@^2.8.5:
+    version "2.8.5"
+    resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
+    integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
+    dependencies:
+      object-assign "^4"
+      vary "^1"
   
   create-require@^1.1.0:
     version "1.1.1"
@@ -5122,7 +5163,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
     integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
   
-  object-assign@^4.0.1, object-assign@^4.1.1:
+  object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.1:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
     integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -6878,7 +6919,7 @@ Lockfile:
       spdx-correct "^3.0.0"
       spdx-expression-parse "^3.0.0"
   
-  vary@~1.1.2:
+  vary@^1, vary@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
     integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
